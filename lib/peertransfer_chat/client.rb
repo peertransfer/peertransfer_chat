@@ -1,8 +1,8 @@
 require 'slackr'
-require 'peertransfer_chat/config'
 
 module PeertransferChat
   class Client
+
     def self.upload(filename)
       new.upload(filename)
     end
@@ -12,13 +12,7 @@ module PeertransferChat
     end
 
     def initialize
-      team = PeertransferChat.config.team
-      token = PeertransferChat.config.token
-      opts = {
-        'channel' => PeertransferChat.config.channel,
-        'username' => PeertransferChat.config.username
-      }
-      @slack = Slackr.connect(team, token, opts)
+      @slack = Slackr.connect(team, token, slack_opts)
     end
 
     def upload(filename)
@@ -30,6 +24,25 @@ module PeertransferChat
     end
 
     private
+
+    def team
+      config.team
+    end
+
+    def token
+      config.token
+    end
+
+    def slack_opts
+      {
+        'channel' => config.channel,
+        'username' => config.username
+      }
+    end
+
+    def config
+      PeertransferChat.config
+    end
 
     attr_reader :slack
   end

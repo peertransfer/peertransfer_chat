@@ -8,6 +8,10 @@ describe PeertransferChat::Client do
   let(:team_username) { 'a username' }
   let(:opts) { { 'channel' => team_channel, 'username' => team_username } }
 
+  after do
+   PeertransferChat.reset!
+  end
+
   before do
     PeertransferChat.configure do |c|
       c.team = team_name

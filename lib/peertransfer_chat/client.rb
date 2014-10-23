@@ -11,16 +11,14 @@ module PeertransferChat
       new.speak(something)
     end
 
-    def initialize
-      @slack = Slackr.connect(team, token, slack_opts)
-    end
-
     def upload(filename)
-      slack.upload(filename)
+      @slack = Slackr.connect(team, api_token, slack_opts)
+      @slack.upload(filename, { 'channels' => channel_id })
     end
 
     def speak(message)
-      slack.say(message)
+      @slack = Slackr.connect(team, incoming_token, slack_opts)
+      @slack.say(message)
     end
 
     private
@@ -29,8 +27,16 @@ module PeertransferChat
       config.team
     end
 
-    def token
-      config.token
+    def incoming_token
+      config.incoming_token
+    end
+
+    def api_token
+      config.api_token
+    end
+
+    def channel_id
+      config.channel_id
     end
 
     def slack_opts
@@ -43,7 +49,5 @@ module PeertransferChat
     def config
       PeertransferChat.config
     end
-
-    attr_reader :slack
   end
 end

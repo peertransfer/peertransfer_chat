@@ -4,7 +4,7 @@ describe PeertransferChat::Client do
   let(:slack_client) { instance_double(Slackr) }
   let(:team_name) { 'a team' }
   let(:team_token) { 'a token' }
-  let(:team_channel){ 'a channel' }
+  let(:team_channel) { 'a channel' }
   let(:team_username) { 'a username' }
   let(:opts) { { 'channel' => team_channel, 'username' => team_username } }
 
@@ -15,7 +15,7 @@ describe PeertransferChat::Client do
   before do
     PeertransferChat.configure do |c|
       c.team = team_name
-      c.token = team_token
+      c.incoming_token = team_token
       c.channel = team_channel
       c.username = team_username
     end

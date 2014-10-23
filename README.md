@@ -23,7 +23,7 @@ First configure the chat client:
 ```ruby
 PeertransferChat.configure do |config|
   config.team = team_name
-  config.token = team_token
+  config.incoming_token = team_token
   config.channel = team_channel
   config.username = team_username
 end

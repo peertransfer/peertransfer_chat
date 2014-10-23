@@ -1,11 +1,11 @@
 module PeertransferChat
   class Config
-    SETTINGS = [:team, :channel, :token, :username]
+    SETTINGS = [:team, :channel, :incoming_token, :username, :api_token]
 
     attr_accessor *SETTINGS
 
     def valid?
-      @team && @channel && @token && @username
+      @team && @channel && @incoming_token && @username
     end
   end
 

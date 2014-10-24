@@ -1,6 +1,6 @@
 module PeertransferChat
   class Config
-    SETTINGS = [:team, :channel, :incoming_token, :username, :api_token]
+    SETTINGS = [:team, :channel, :incoming_token, :username, :api_token, :channel_id]
 
     attr_accessor *SETTINGS
 

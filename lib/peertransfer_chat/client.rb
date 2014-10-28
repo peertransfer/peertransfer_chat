@@ -12,13 +12,13 @@ module PeertransferChat
     end
 
     def upload(filename)
-      @slack = Slackr.connect(team, api_token, slack_opts)
-      @slack.upload(filename, { 'channels' => channel_id })
+      slack = Slackr.connect(team, api_token, slack_opts)
+      slack.upload(filename, { 'channels' => channel_id })
     end
 
     def speak(message)
-      @slack = Slackr.connect(team, incoming_token, slack_opts)
-      @slack.say(message)
+      slack = Slackr.connect(team, incoming_token, slack_opts)
+      slack.say(message)
     end
 
     private

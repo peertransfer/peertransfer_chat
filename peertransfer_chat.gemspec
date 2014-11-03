@@ -12,8 +12,8 @@ Gem::Specification.new do |spec|
   spec.description   = %q{A common interface to our chat system}
 
   files = Dir['lib/*.rb'] + Dir['lib/**/*.rb']
-  rootfiles = ['Gemfile', 'Gemfile.lock', 'peertransfer_chat.gemspec', 'README.md']
-  dotfiles = ['.gitignore', '.rspec']
+  rootfiles = ['Gemfile', 'peertransfer_chat.gemspec', 'README.md']
+  dotfiles = ['.gitignore']
 
   spec.files = files + rootfiles + dotfiles
   spec.test_files = Dir['spec/*.rb'] + Dir['spec/**/*.rb']

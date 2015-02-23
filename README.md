@@ -1,12 +1,15 @@
 # PeertransferChat
 
-A wrapper to our chat system
+A wrapper that works as a unique interface to integrate a chat system into the peerTransfer platform.
+
+## Build Status
+
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
-    gem 'peertransfer_chat'
+    gem 'peertransfer_chat', :git => 'git://github.com/peertransfer/peertransfer_chat.git'
 
 And then execute:
 
@@ -18,7 +21,7 @@ Or install it yourself as:
 
 ## Usage
 
-First configure the chat client:
+Configure the chat client:
 
 ```ruby
 PeertransferChat.configure do |config|
@@ -29,4 +32,13 @@ PeertransferChat.configure do |config|
 end
 ```
 
-And then use `say` or `upload` class methods.
+Send a message:
+
+```ruby 
+PeertransferChat::Client.speak('There are issues pending review')
+```
+
+Upload a file:
+```ruby
+PeertransferChat::Client.upload('/path/to/a/file.txt')
+```

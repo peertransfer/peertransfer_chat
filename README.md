@@ -13,7 +13,7 @@ A wrapper that works as a unique interface to integrate a chat system into the p
 
 Add this line to your application's Gemfile:
 
-    gem 'peertransfer_chat', :git => 'git://github.com/peertransfer/peertransfer_chat.git'
+    gem 'peertransfer_chat', git: 'https://github.com/peertransfer/peertransfer_chat.git'
 
 And then execute:
 

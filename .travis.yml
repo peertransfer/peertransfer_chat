@@ -1,8 +1,16 @@
 language: ruby
 rvm:
-  - 2.2.5
-  - 2.3.1
-  - jruby-9.1.2.0
+- 2.5.1
+- 2.4.4
+- jruby-9.1.2.0
 script: bundle exec rspec
 before_install:
-  - gem update --system
+- gem update --system
+deploy:
+  provider: rubygems
+  gem: peertransfer_chat
+  on:
+    tags: true
+    repo: peertransfer/peertransfer_chat
+  api_key:
+    secure: NPKHCk1x3ENSahzTn/g65sx6TLCnkpUAQ41IWXaE6XwVIRuqJcwublXzZv+GEZywuL09sCAPcfJ7I2iD2yFlQhNq84TxpxCczSrhXoi6eu6rx+kRrbywBiHhe80UjWS+j4/EmzY3AiXcT2PUMnWiVAmTQHt/LnbrwGkVcibwUj8=

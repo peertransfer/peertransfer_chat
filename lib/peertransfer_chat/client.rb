@@ -1,7 +1,8 @@
 require 'slackr'
 
-module PeertransferChat
+class PeertransferChat
   class Client
+    attr_accessor :config
 
     def self.upload(filename)
       new.upload(filename)
@@ -9,6 +10,13 @@ module PeertransferChat
 
     def self.speak(something)
       new.speak(something)
+    end
+
+    def initialize
+      if block_given?
+        @config = Config.new
+        yield(@config)
+      end
     end
 
     def upload(filename)
@@ -47,7 +55,7 @@ module PeertransferChat
     end
 
     def config
-      PeertransferChat.config
+      @config ||= PeertransferChat.config
     end
   end
 end

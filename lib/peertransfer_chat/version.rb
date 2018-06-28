@@ -1,3 +1,3 @@
-module PeertransferChat
-  VERSION = "0.0.1"
+class PeertransferChat
+  VERSION = "0.1.0"
 end

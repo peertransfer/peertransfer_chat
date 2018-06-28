@@ -1,17 +1,21 @@
-module PeertransferChat
+class PeertransferChat
   class Config
     SETTINGS = [:team, :channel, :incoming_token, :username, :api_token, :channel_id]
 
-    attr_accessor *SETTINGS
+    attr_accessor(*SETTINGS)
 
     def valid?
       @team && @channel && @incoming_token && @username
     end
   end
 
+  def config
+    @config ||= Config.new
+  end
+
   class << self
     def configure
-      @config ||= Config.new
+      @config ||= new.config
       yield(@config)
     end
 

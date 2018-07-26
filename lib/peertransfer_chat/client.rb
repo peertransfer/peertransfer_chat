@@ -19,9 +19,9 @@ class PeertransferChat
       end
     end
 
-    def upload(filename)
+    def upload(filename, opts = {})
       slack = Slackr.connect(team, api_token, slack_opts)
-      slack.upload(filename, { 'channels' => channel_id })
+      slack.upload(filename, { 'channels' => channel_id}.merge(opts))
     end
 
     def speak(message)

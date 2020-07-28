@@ -1,16 +1,14 @@
 require 'spec_helper'
 
 describe PeertransferChat::Config do
-  let(:team_name) { 'a team' }
-  let(:team_token) { 'a token' }
+  let(:api_token) { 'a token' }
   let(:team_channel) { 'a channel' }
   let(:team_username) { 'a username' }
 
   context 'when configured' do
     before do
       PeertransferChat.configure do |config|
-        config.team = team_name
-        config.incoming_token = team_token
+        config.api_token = api_token
         config.channel = team_channel
         config.username = team_username
       end
@@ -27,15 +25,14 @@ describe PeertransferChat::Config do
     end
 
     it 'stores config' do
-      expect(PeertransferChat.config.team).to eq('a team')
+      expect(PeertransferChat.config.api_token).to eq(api_token)
     end
   end
 
   context 'not configured' do
     before do
       PeertransferChat.configure do |config|
-        config.team = team_name
-        config.incoming_token = team_token
+        config.api_token = api_token
         config.channel = team_channel
       end
     end

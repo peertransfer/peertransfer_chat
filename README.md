@@ -29,8 +29,7 @@ Configure the chat client:
 
 ```ruby
 PeertransferChat.configure do |config|
-  config.team = team_name
-  config.incoming_token = team_token
+  config.api_token = api_token
   config.channel = team_channel
   config.username = team_username
 end
@@ -48,9 +47,6 @@ PeertransferChat::Client.upload('/path/to/a/file.txt')
 ```
 
 ## Slack settings description
- - `team` Your team
  - `channel` Channel name
  - `api_token` This token comes from your user https://api.slack.com/web
  - `rtm_token` Real time messaging, you can find it in integration -> bot -> token
- - `incomming_token` Incoming web hook token, you can create one in  integration -> incomming webhooks
- - `channel_id` Channel id you can find it in the code of your slack team web page

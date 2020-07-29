@@ -1,4 +1,4 @@
-require 'slackr'
+require 'slack-ruby-client'
 
 class PeertransferChat
   class Client
@@ -20,38 +20,36 @@ class PeertransferChat
     end
 
     def upload(filename, opts = {})
-      slack = Slackr.connect(team, api_token, slack_opts)
-      slack.upload(filename, { 'channels' => channel_id}.merge(opts))
+      client.files_upload(
+        channels: channel,
+        as_user: true,
+        file: Faraday::UploadIO.new(filename, 'image/png'),
+        title: 'output.txt',
+        filename: filename,
+        initial_comment: 'Attachment'
+      )
     end
 
     def speak(message)
-      slack = Slackr.connect(team, incoming_token, slack_opts)
-      slack.say(message)
+      client.chat_postMessage(channel: channel, text: message, as_user: true, username: username)
     end
 
     private
 
-    def team
-      config.team
+    def client
+      @client ||= Slack::Web::Client.new(token: api_token)
     end
 
-    def incoming_token
-      config.incoming_token
+    def channel
+      config.channel
     end
 
     def api_token
       config.api_token
     end
 
-    def channel_id
-      config.channel_id
-    end
-
-    def slack_opts
-      {
-        'channel' => config.channel,
-        'username' => config.username
-      }
+    def username
+      config.username
     end
 
     def config

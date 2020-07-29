@@ -1,49 +1,59 @@
 require 'spec_helper'
 
 describe PeertransferChat::Client do
-  let(:slack_client) { instance_double(Slackr) }
-  let(:team_name) { 'a team' }
-  let(:team_token) { 'a token' }
+  let(:slack_client) { instance_spy(Slack::Web::Client) }
   let(:api_token) { 'an api token' }
   let(:team_channel) { 'a channel' }
   let(:team_username) { 'a username' }
-  let(:opts) { { 'channel' => team_channel, 'username' => team_username } }
 
   before do
     allow(PeertransferChat).to receive(:config).and_return(
       double(
         PeertransferChat::Config,
-        team: team_name,
-        incoming_token: team_token,
         channel: team_channel,
         username: team_username,
-        channel_id: 'C026VKGP7',
         api_token: api_token
       )
     )
   end
 
   describe '.upload' do
+    let(:filename) { '/foo/bar.bin' }
+
     it 'uploads image to a channel' do
-      allow(Slackr).to receive(:connect).
-        with(team_name, api_token, opts).
+      allow(Slack::Web::Client).to receive(:new).
+        with(token: api_token).
         and_return(slack_client)
 
-      expect(slack_client).to receive(:upload).with('/foo/bar.bin', { 'channels' => 'C026VKGP7' })
+      file_io = instance_double(Faraday::UploadIO)
 
-      described_class.upload('/foo/bar.bin')
+      allow(Faraday::UploadIO).to receive(:new).with(filename, 'image/png').
+        and_return(file_io)
+
+      described_class.upload(filename)
+
+      expect(slack_client).to have_received(:files_upload). with(
+        channels: team_channel,
+        as_user: true,
+        file: file_io,
+        title: 'output.txt',
+        filename: filename,
+        initial_comment: 'Attachment'
+      )
+
     end
   end
 
-  describe '.say' do
+  describe '.speak' do
     it 'speaks something to a channel' do
-      allow(Slackr).to receive(:connect).
-        with(team_name, team_token, opts).
+      allow(Slack::Web::Client).to receive(:new).
+        with(token: api_token).
         and_return(slack_client)
 
-      expect(slack_client).to receive(:say).with('hello')
-
       described_class.speak('hello')
+
+      expect(slack_client).to have_received(:chat_postMessage).
+          with(channel: team_channel, text: 'hello', as_user: true, username: team_username)
     end
   end
 end

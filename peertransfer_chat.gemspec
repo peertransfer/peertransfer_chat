@@ -6,8 +6,8 @@ require 'peertransfer_chat/version'
 Gem::Specification.new do |spec|
   spec.name          = 'peertransfer_chat'
   spec.version       = PeertransferChat::VERSION
-  spec.authors       = ['peerTransfer tech']
-  spec.email         = ['tech@peertransfer.com']
+  spec.authors       = ['Flywire Engineering']
+  spec.email         = ['engineering@flywire.com']
   spec.summary       = %q{A common interface to our chat system}
   spec.description   = %q{A common interface to our chat system}
 
@@ -19,9 +19,8 @@ Gem::Specification.new do |spec|
   spec.test_files = Dir['spec/*.rb'] + Dir['spec/**/*.rb']
   spec.require_paths = ['lib']
 
-  spec.add_runtime_dependency 'slackr', '0.0.6'
+  spec.add_runtime_dependency 'slack-ruby-client', '~> 0.14'
 
-  spec.add_development_dependency 'bundler', '~> 1.6'
-  spec.add_development_dependency 'simplecov'
-  spec.add_development_dependency 'coveralls'
+  spec.add_development_dependency 'bundler'
+  spec.add_development_dependency 'coveralls',  '~> 0.8'
 end

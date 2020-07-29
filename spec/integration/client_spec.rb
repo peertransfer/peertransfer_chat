@@ -1,32 +1,30 @@
 require 'spec_helper'
 
 describe PeertransferChat::Client do
-  let(:slack_client) { instance_spy(Slackr) }
-  let(:team_name) { 'a team' }
-  let(:team_token) { 'a token' }
+  let(:slack_client) { instance_spy(Slack::Web::Client) }
   let(:team_channel) { 'a channel' }
   let(:team_username) { 'a username' }
-  let(:opts) { { 'channel' => team_channel, 'username' => team_username } }
+  let(:api_token) { 'a_api_token' }
 
   context 'with class configuration' do
     before do
       PeertransferChat.configure do |c|
-        c.team = team_name
-        c.incoming_token = team_token
         c.channel = team_channel
         c.username = team_username
+        c.api_token = api_token
       end
 
-      allow(Slackr).to receive(:connect).
-        with(team_name, team_token, opts).
+      allow(Slack::Web::Client).to receive(:new).
+        with(token: api_token).
         and_return(slack_client)
     end
 
-    describe '.say' do
+    describe '.speak' do
       it 'speaks something to a channel' do
         described_class.speak('hello')
 
-        expect(slack_client).to have_received(:say).with('hello')
+        expect(slack_client).to have_received(:chat_postMessage).
+          with(channel: team_channel, text: 'hello', as_user: true, username: team_username)
 
         PeertransferChat.reset!
       end
@@ -35,25 +33,25 @@ describe PeertransferChat::Client do
 
   context 'with instance configuration' do
     before do
-      allow(Slackr).to receive(:connect).
-        with(team_name, team_token, opts).
+      allow(Slack::Web::Client).to receive(:new).
+        with(token: api_token).
         and_return(slack_client)
     end
 
     let(:client) do
       PeertransferChat::Client.new do |c|
-        c.team = team_name
-        c.incoming_token = team_token
+        c.api_token = api_token
         c.channel = team_channel
         c.username = team_username
       end
     end
 
-    describe '.say' do
+    describe '.speak' do
       it 'speaks something to a channel' do
         client.speak('hello')
 
-        expect(slack_client).to have_received(:say).with('hello')
+        expect(slack_client).to have_received(:chat_postMessage).
+          with(channel: team_channel, text: 'hello', as_user: true, username: team_username)
       end
     end
   end
